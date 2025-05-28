@@ -5,7 +5,7 @@ Tools for building Python scripts and applications leveraging the OCSF.
 ## Quick Start
 
 If you just want to use this library as a CLI tool, install it with `pip` or
-`poetry` and try the following commands:
+`uv` and try the following commands:
 
 ```sh
 python -m ocsf.compile path/to/ocsf-schema
@@ -94,7 +94,7 @@ There is a very simple `__main__` implementation to demonstrate the comparison.
 You can use it as follows:
 
 ```sh
-$ poetry run python -m ocsf_tools.compare 1.0.0 1.2.0
+$ uv run python -m ocsf_tools.compare 1.0.0 1.2.0
 ```
 
 The comparison API is straightforward. Want to look for removed events?
@@ -128,7 +128,7 @@ for name, obj in diff.objects.items():
 ```
 
 
-### ocsf.validate.framework: The Validation Framework Package 
+### ocsf.validate.framework: The Validation Framework Package
 
 The `ocsf.validate.framework` package provides a lightweight framework for
 validators. It was inspired by the needs of `ocsf-validator`, which may be
@@ -144,7 +144,7 @@ any breaking changes between the old and new version.
 
 ### PyPI
 
-The easiest way to install `ocsf-lib` is from PyPI using `pip` or `poetry`:
+The easiest way to install `ocsf-lib` is from PyPI using `pip` or `uv`:
 
 ```sh
 $ pip install ocsf-lib
@@ -153,12 +153,10 @@ $ pip install ocsf-lib
 
 ### From Source
 
-If you want to work with the source, the recommended installation is with `asdf`
-and `poetry`.
+If you want to work with the source, the recommended installation is with `asdf` and `uv`.
 
 ```sh
 $ asdf install
-$ poetry install
 ```
 
 ## Contributing
@@ -169,10 +167,10 @@ checking, and `pytest` as its test runner.
 Before submitting a PR, make sure you've run following:
 
 ```sh
-$ poetry run ruff format
-$ poetry run ruff check
-$ poetry run pyright
-$ poetry run pytest
+$ uv run ruff format
+$ uv run ruff check
+$ uv run pyright
+$ uv run pytest
 ```
 
 ### Type Checking
@@ -191,13 +189,13 @@ me, I can't figure it out. I blame pyright but it's probably my own fault.
 Running unit tests:
 
 ```sh
-$ poetry run pytest -m "not integration"
+$ uv run pytest -m "not integration"
 ```
 
 Running integration tests:
 
 ```sh
-$ poetry run pytest -m integration
+$ uv run pytest -m integration
 ```
 
 **NOTE**: Some of the integration tests require an OCSF server instance, and are

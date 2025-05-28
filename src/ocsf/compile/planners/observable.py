@@ -20,7 +20,6 @@ across objects and events.
 """
 
 from dataclasses import dataclass
-from typing import Optional
 
 from ocsf.repository import (
     AnyDefinition,
@@ -49,8 +48,8 @@ class _Registry:
 
     def __init__(self, schema: ProtoSchema):
         self._schema = schema
-        self._types: Optional[dict[str, int]] = None
-        self._attrs: Optional[dict[str, int]] = None
+        self._types: dict[str, int] | None = None
+        self._attrs: dict[str, int] | None = None
         self._objects: dict[str, int | None] = {}
 
     def _build(self):
@@ -107,7 +106,7 @@ class _Registry:
 
 @dataclass(eq=True, frozen=True)
 class MarkObservablesOp(Operation):
-    registry: Optional[_Registry] = None
+    registry: _Registry | None = None
 
     def __str__(self):
         return f"Mark observable property of attributes in {self.target}"
@@ -159,7 +158,7 @@ class MarkObservablesOp(Operation):
 
 @dataclass(eq=True, frozen=True)
 class BuildObservableTypeOp(Operation):
-    registry: Optional[_Registry] = None
+    registry: _Registry | None = None
 
     def __str__(self):
         return f"Build observable types from in {self.prerequisite}"

@@ -46,7 +46,7 @@ the appropriate dict and NoChange. See ChangedAttr.enum for an example.
 
 from abc import ABC
 from dataclasses import dataclass, field
-from typing import Any, Generic, Optional, TypeVar
+from typing import Any, Generic, TypeVar
 
 from ocsf.schema import (
     OcsfAttr,
@@ -84,8 +84,8 @@ class Removal(SimpleDifference[T]):
 
 @dataclass
 class Change(SimpleDifference[T]):
-    before: Optional[T]
-    after: Optional[T]
+    before: T | None
+    after: T | None
 
 
 @dataclass
@@ -106,8 +106,8 @@ class ChangedVersion(ChangedModel[OcsfVersion]):
 @dataclass
 class ChangedEnumMember(ChangedModel[OcsfEnumMember]):
     caption: Difference[str] = field(default_factory=NoChange)
-    description: Difference[Optional[str]] = field(default_factory=NoChange)
-    notes: Difference[Optional[str]] = field(default_factory=NoChange)
+    description: Difference[str | None] = field(default_factory=NoChange)
+    notes: Difference[str | None] = field(default_factory=NoChange)
 
 
 @dataclass
@@ -119,31 +119,31 @@ class ChangedDeprecationInfo(ChangedModel[OcsfDeprecationInfo]):
 @dataclass
 class ChangedType(ChangedModel[OcsfType]):
     caption: Difference[str] = field(default_factory=NoChange)
-    description: Difference[Optional[str]] = field(default_factory=NoChange)
+    description: Difference[str | None] = field(default_factory=NoChange)
     is_array: Difference[bool] = field(default_factory=NoChange)
-    deprecated: Difference[Optional[ChangedDeprecationInfo]] = field(default_factory=NoChange)
-    max_len: Difference[Optional[int]] = field(default_factory=NoChange)
-    observable: Difference[Optional[int]] = field(default_factory=NoChange)
-    range: Difference[Optional[list[int]]] = field(default_factory=NoChange)
-    regex: Difference[Optional[str]] = field(default_factory=NoChange)
-    type: Difference[Optional[str]] = field(default_factory=NoChange)
-    type_name: Difference[Optional[str]] = field(default_factory=NoChange)
-    values: Difference[Optional[list[Any]]] = field(default_factory=NoChange)
+    deprecated: Difference[ChangedDeprecationInfo | None] = field(default_factory=NoChange)
+    max_len: Difference[int | None] = field(default_factory=NoChange)
+    observable: Difference[int | None] = field(default_factory=NoChange)
+    range: Difference[list[int] | None] = field(default_factory=NoChange)
+    regex: Difference[str | None] = field(default_factory=NoChange)
+    type: Difference[str | None] = field(default_factory=NoChange)
+    type_name: Difference[str | None] = field(default_factory=NoChange)
+    values: Difference[list[Any] | None] = field(default_factory=NoChange)
 
 
 @dataclass
 class ChangedAttr(ChangedModel[OcsfAttr]):
     caption: Difference[str] = field(default_factory=NoChange)
-    description: Difference[Optional[str]] = field(default_factory=NoChange)
+    description: Difference[str | None] = field(default_factory=NoChange)
     requirement: Difference[str] = field(default_factory=NoChange)
     type: Difference[str] = field(default_factory=NoChange)
     is_array: Difference[bool] = field(default_factory=NoChange)
     enum: dict[str, Difference[OcsfEnumMember]] | NoChange[None] = field(default_factory=NoChange)
-    group: Difference[Optional[str]] = field(default_factory=NoChange)
-    observable: Difference[Optional[int]] = field(default_factory=NoChange)
-    sibling: Difference[Optional[str]] = field(default_factory=NoChange)
-    profile: Difference[Optional[str | list[str]]] = field(default_factory=NoChange)
-    deprecated: Difference[Optional[OcsfDeprecationInfo]] = field(default_factory=NoChange)
+    group: Difference[str | None] = field(default_factory=NoChange)
+    observable: Difference[int | None] = field(default_factory=NoChange)
+    sibling: Difference[str | None] = field(default_factory=NoChange)
+    profile: Difference[str | list[str] | None] = field(default_factory=NoChange)
+    deprecated: Difference[OcsfDeprecationInfo | None] = field(default_factory=NoChange)
 
 
 @dataclass
@@ -151,12 +151,12 @@ class ChangedObject(ChangedModel[OcsfObject]):
     caption: Difference[str] = field(default_factory=NoChange)
     name: Difference[str] = field(default_factory=NoChange)
     attributes: dict[str, Difference[OcsfAttr]] = field(default_factory=dict)
-    description: Difference[Optional[str]] = field(default_factory=NoChange)
-    extends: Difference[Optional[str]] = field(default_factory=NoChange)
-    observable: Difference[Optional[int]] = field(default_factory=NoChange)
-    profiles: Difference[Optional[list[str]]] = field(default_factory=NoChange)
+    description: Difference[str | None] = field(default_factory=NoChange)
+    extends: Difference[str | None] = field(default_factory=NoChange)
+    observable: Difference[int | None] = field(default_factory=NoChange)
+    profiles: Difference[list[str] | None] = field(default_factory=NoChange)
     constraints: dict[str, Difference[list[str]]] = field(default_factory=dict)
-    deprecated: Difference[Optional[OcsfDeprecationInfo]] = field(default_factory=NoChange)
+    deprecated: Difference[OcsfDeprecationInfo | None] = field(default_factory=NoChange)
 
 
 @dataclass
@@ -164,15 +164,15 @@ class ChangedEvent(ChangedModel[OcsfEvent]):
     caption: Difference[str] = field(default_factory=NoChange)
     name: Difference[str] = field(default_factory=NoChange)
     attributes: dict[str, Difference[OcsfAttr]] = field(default_factory=dict)
-    description: Difference[Optional[str]] = field(default_factory=NoChange)
-    uid: Difference[Optional[int]] = field(default_factory=NoChange)
-    category: Difference[Optional[str]] = field(default_factory=NoChange)
-    extends: Difference[Optional[str]] = field(default_factory=NoChange)
-    profiles: Difference[Optional[list[str]]] = field(default_factory=NoChange)
+    description: Difference[str | None] = field(default_factory=NoChange)
+    uid: Difference[int | None] = field(default_factory=NoChange)
+    category: Difference[str | None] = field(default_factory=NoChange)
+    extends: Difference[str | None] = field(default_factory=NoChange)
+    profiles: Difference[list[str] | None] = field(default_factory=NoChange)
     associations: dict[str, Difference[list[str]]] = field(default_factory=dict)
     constraints: dict[str, Difference[list[str]]] = field(default_factory=dict)
-    include: Difference[Optional[str]] = field(default_factory=NoChange)
-    deprecated: Difference[Optional[OcsfDeprecationInfo]] = field(default_factory=NoChange)
+    include: Difference[str | None] = field(default_factory=NoChange)
+    deprecated: Difference[OcsfDeprecationInfo | None] = field(default_factory=NoChange)
 
 
 @dataclass
@@ -180,20 +180,20 @@ class ChangedProfile(ChangedModel[OcsfProfile]):
     caption: Difference[str] = field(default_factory=NoChange)
     name: Difference[str] = field(default_factory=NoChange)
     meta: Difference[str] = field(default_factory=NoChange)
-    description: Difference[Optional[str]] = field(default_factory=NoChange)
+    description: Difference[str | None] = field(default_factory=NoChange)
     attributes: dict[str, Difference[OcsfAttr]] = field(default_factory=dict)
-    deprecated: Difference[Optional[OcsfDeprecationInfo]] = field(default_factory=NoChange)
+    deprecated: Difference[OcsfDeprecationInfo | None] = field(default_factory=NoChange)
     annotations: dict[str, Difference[str]] = field(default_factory=dict)
 
 
 @dataclass
 class ChangedExtension(ChangedModel[OcsfExtension]):
     name: Difference[str] = field(default_factory=NoChange)
-    version: Difference[Optional[str]] = field(default_factory=NoChange)
+    version: Difference[str | None] = field(default_factory=NoChange)
     uid: Difference[int] = field(default_factory=NoChange)
     caption: Difference[str] = field(default_factory=NoChange)
-    description: Difference[Optional[str]] = field(default_factory=NoChange)
-    deprecated: Difference[Optional[OcsfDeprecationInfo]] = field(default_factory=NoChange)
+    description: Difference[str | None] = field(default_factory=NoChange)
+    deprecated: Difference[OcsfDeprecationInfo | None] = field(default_factory=NoChange)
 
 
 @dataclass
@@ -201,8 +201,8 @@ class ChangedCategory(ChangedModel[OcsfCategory]):
     name: Difference[str] = field(default_factory=NoChange)
     uid: Difference[int] = field(default_factory=NoChange)
     caption: Difference[str] = field(default_factory=NoChange)
-    description: Difference[Optional[str]] = field(default_factory=NoChange)
-    deprecated: Difference[Optional[OcsfDeprecationInfo]] = field(default_factory=NoChange)
+    description: Difference[str | None] = field(default_factory=NoChange)
+    deprecated: Difference[OcsfDeprecationInfo | None] = field(default_factory=NoChange)
     classes: dict[str, Difference[OcsfEvent]] = field(default_factory=dict)
 
 
@@ -212,7 +212,7 @@ class ChangedSchema(ChangedModel[OcsfSchema]):
     objects: dict[str, Difference[OcsfObject]] = field(default_factory=dict)
     version: Difference[OcsfVersion] = field(default_factory=NoChange)
     types: dict[str, ChangedType] = field(default_factory=dict)
-    base_event: Difference[Optional[OcsfEvent]] = field(default_factory=NoChange)
+    base_event: Difference[OcsfEvent | None] = field(default_factory=NoChange)
     profiles: dict[str, Difference[OcsfProfile]] = field(default_factory=dict)
     extensions: dict[str, Difference[OcsfExtension]] = field(default_factory=dict)
     categories: dict[str, Difference[OcsfCategory]] = field(default_factory=dict)

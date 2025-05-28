@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Optional
 
 from ocsf.repository import AnyDefinition, DefinitionFile, RepoPath
 
@@ -12,7 +11,7 @@ from ..protoschema import ProtoSchema
 @dataclass(eq=True, frozen=True)
 class Operation(ABC):
     target: RepoPath
-    prerequisite: Optional[RepoPath] = None
+    prerequisite: RepoPath | None = None
 
     @abstractmethod
     def apply(self, schema: ProtoSchema) -> MergeResult: ...

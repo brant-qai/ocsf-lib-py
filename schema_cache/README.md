@@ -11,5 +11,5 @@ export (this should be a tagged release), then run:
 export ocsf_p=/path/to/schema/working/copy
 export ocsf_v=1.n.0
 
-poetry run python -m ocsf.compile "$ocsf_p" --set-observable --prefix-extensions --set-object-types > schema_cache/schema-$ocsf_v.json
+uv run python -m ocsf.compile "$ocsf_p" --set-observable --prefix-extensions --set-object-types > schema_cache/schema-$ocsf_v.json
 ```

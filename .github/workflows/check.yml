@@ -11,14 +11,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup python and poetry
-        uses: ./.github/actions/poetry
+      - name: Setup python and uv
+        uses: ./.github/actions/uv
 
       - name: Check formatting
         run: |
           source $VENV
-          poetry run ruff check
-          poetry run ruff format --check
+          uv run ruff check
+          uv run ruff format --check
 
   type-checking:
     runs-on: ubuntu-latest
@@ -27,13 +27,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup python and poetry
-        uses: ./.github/actions/poetry
+      - name: Setup python and uv
+        uses: ./.github/actions/uv
 
       - name: Type check
         run: |
           source $VENV
-          poetry run pyright --warnings
+          uv run pyright --warnings
 
   testing:
     strategy:
@@ -47,10 +47,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup python and poetry
-        uses: ./.github/actions/poetry
+      - name: Setup python and uv
+        uses: ./.github/actions/uv
 
       - name: Run tests
         run: |
-          source $VENV
-          poetry run pytest
+          uv run pytest

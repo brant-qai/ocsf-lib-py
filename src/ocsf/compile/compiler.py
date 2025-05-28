@@ -8,7 +8,6 @@ Example:
 
 """
 
-from typing import Optional
 
 from ocsf.repository import RepoPath, Repository
 from ocsf.schema import OcsfSchema
@@ -47,10 +46,10 @@ PlanningPhase = list[Planner]
 
 class Compilation:
     def __init__(self, repo: Repository, options: CompilationOptions | None = None):
-        self._operations: Optional[CompilationOperations] = None
-        self._plan: Optional[CompilationPlan] = None
-        self._mutations: Optional[CompilationMutations] = None
-        self._schema: Optional[OcsfSchema] = None
+        self._operations: CompilationOperations | None = None
+        self._plan: CompilationPlan | None = None
+        self._mutations: CompilationMutations | None = None
+        self._schema: OcsfSchema | None = None
         self._repo = repo
         self._proto = ProtoSchema(repo)
         _options = CompilationOptions() if options is None else options
@@ -147,7 +146,7 @@ class Compilation:
         self._operations = operations
         return operations
 
-    def order(self, operations: Optional[CompilationOperations] = None) -> CompilationPlan:
+    def order(self, operations: CompilationOperations | None = None) -> CompilationPlan:
         """Order the operations for compilation.
 
         Returns:
@@ -179,7 +178,7 @@ class Compilation:
         self._plan = plan
         return plan
 
-    def compile(self, plan: Optional[CompilationPlan] = None) -> CompilationMutations:
+    def compile(self, plan: CompilationPlan | None = None) -> CompilationMutations:
         """Applies all operations in the plan to the schema.
 
         Returns:

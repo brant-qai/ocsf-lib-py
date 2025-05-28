@@ -1,5 +1,5 @@
 # pyright: reportPrivateUsage = false
-from typing import Any, Optional
+from typing import Any
 
 from ocsf.compare import (
     Addition,
@@ -23,8 +23,8 @@ def test_compare_primitives():
     assert compare([1, 2, 3], [1, 2]) == Change(before=[1, 2, 3], after=[1, 2])
     assert compare("test1", "test2") == Change(before="test1", after="test2")
 
-    x1: Optional[bool] = True
-    x2: Optional[bool] = None
+    x1: bool | None = True
+    x2: bool | None = None
     assert compare(x1, x2) == Change(True, None)
 
 

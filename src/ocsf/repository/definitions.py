@@ -1,7 +1,7 @@
 """A collection of data classes representing the metaschema of the OCSF."""
 
 from dataclasses import dataclass
-from typing import Any, Optional, TypeVar
+from typing import Any, TypeVar
 
 IncludeTarget = str | list[str]
 
@@ -14,98 +14,98 @@ class DefinitionData(DefinitionPart): ...
 
 @dataclass
 class VersionDefn(DefinitionData):
-    version: Optional[str] = None
+    version: str | None = None
 
 
 @dataclass
 class EnumMemberDefn(DefinitionPart):
     """An enum member. Enums are dictionaries of str: EnumMemberDefn."""
 
-    caption: Optional[str] = None
-    description: Optional[str] = None
-    notes: Optional[str] = None
+    caption: str | None = None
+    description: str | None = None
+    notes: str | None = None
 
 
 @dataclass
 class DeprecationInfoDefn(DefinitionPart):
     """Deprecation information for an object, event, or attribute."""
 
-    message: Optional[str] = None
-    since: Optional[str] = None
+    message: str | None = None
+    since: str | None = None
 
 
 @dataclass
 class TypeDefn(DefinitionPart):
     """A data type definition."""
 
-    caption: Optional[str] = None
-    description: Optional[str] = None
-    is_array: Optional[bool] = None
-    deprecated: Optional[DeprecationInfoDefn] = None
-    max_len: Optional[int] = None
-    observable: Optional[int] = None
-    range: Optional[list[int]] = None
-    regex: Optional[str] = None
-    type: Optional[str] = None
-    type_name: Optional[str] = None
-    values: Optional[list[Any]] = None
+    caption: str | None = None
+    description: str | None = None
+    is_array: bool | None = None
+    deprecated: DeprecationInfoDefn | None = None
+    max_len: int | None = None
+    observable: int | None = None
+    range: list[int] | None = None
+    regex: str | None = None
+    type: str | None = None
+    type_name: str | None = None
+    values: list[Any] | None = None
 
 
 @dataclass
 class DictionaryTypesDefn(DefinitionPart):
-    attributes: Optional[dict[str, TypeDefn | IncludeTarget]] = None
-    caption: Optional[str] = None
-    description: Optional[str] = None
+    attributes: dict[str, TypeDefn | IncludeTarget] | None = None
+    caption: str | None = None
+    description: str | None = None
 
 
 @dataclass
 class AttrDefn(DefinitionPart):
     """An attribute definition."""
 
-    caption: Optional[str] = None
-    requirement: Optional[str] = None
-    type: Optional[str] = None
-    description: Optional[str] = None
-    is_array: Optional[bool] = None
-    deprecated: Optional[DeprecationInfoDefn] = None
-    enum: Optional[dict[str, EnumMemberDefn]] = None
-    group: Optional[str] = None
-    observable: Optional[int] = None
-    profile: Optional[str | list[str]] = None
-    sibling: Optional[str] = None
-    object_type: Optional[str] = None
-    object_name: Optional[str] = None
+    caption: str | None = None
+    requirement: str | None = None
+    type: str | None = None
+    description: str | None = None
+    is_array: bool | None = None
+    deprecated: DeprecationInfoDefn | None = None
+    enum: dict[str, EnumMemberDefn] | None = None
+    group: str | None = None
+    observable: int | None = None
+    profile: str | list[str] | None = None
+    sibling: str | None = None
+    object_type: str | None = None
+    object_name: str | None = None
 
 
 @dataclass
 class DictionaryDefn(DefinitionData):
     """A dictionary definition."""
 
-    name: Optional[str] = None
-    caption: Optional[str] = None
-    description: Optional[str] = None
-    attributes: Optional[dict[str, AttrDefn | IncludeTarget]] = None
-    types: Optional[DictionaryTypesDefn] = None
+    name: str | None = None
+    caption: str | None = None
+    description: str | None = None
+    attributes: dict[str, AttrDefn | IncludeTarget] | None = None
+    types: DictionaryTypesDefn | None = None
 
 
 @dataclass
 class ObjectDefn(DefinitionData):
     """An object definition."""
 
-    caption: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    attributes: Optional[dict[str, AttrDefn | IncludeTarget]] = None
-    extends: Optional[str] = None
-    observable: Optional[int] = None
-    profiles: Optional[list[str]] = None
-    constraints: Optional[dict[str, list[str]]] = None
-    deprecated: Optional[DeprecationInfoDefn] = None
-    include_: Optional[IncludeTarget] = None
-    src_extension: Optional[str] = None
-    key: Optional[str] = None
+    caption: str | None = None
+    name: str | None = None
+    description: str | None = None
+    attributes: dict[str, AttrDefn | IncludeTarget] | None = None
+    extends: str | None = None
+    observable: int | None = None
+    profiles: list[str] | None = None
+    constraints: dict[str, list[str]] | None = None
+    deprecated: DeprecationInfoDefn | None = None
+    include_: IncludeTarget | None = None
+    src_extension: str | None = None
+    key: str | None = None
 
-    def get_key(self) -> Optional[str]:
+    def get_key(self) -> str | None:
         """Return the key for the object definition with the extension prefix when appropriate."""
         if self.key is None:
             return self.name
@@ -117,22 +117,22 @@ class ObjectDefn(DefinitionData):
 class EventDefn(DefinitionData):
     """An event definition."""
 
-    caption: Optional[str] = None
-    name: Optional[str] = None
-    attributes: Optional[dict[str, AttrDefn | IncludeTarget]] = None
-    description: Optional[str] = None
-    uid: Optional[int] = None
-    category: Optional[str] = None
-    extends: Optional[str] = None
-    profiles: Optional[list[str]] = None
-    associations: Optional[dict[str, list[str]]] = None
-    constraints: Optional[dict[str, list[str]]] = None
-    deprecated: Optional[DeprecationInfoDefn] = None
-    include_: Optional[IncludeTarget] = None
-    src_extension: Optional[str] = None
-    key: Optional[str] = None
+    caption: str | None = None
+    name: str | None = None
+    attributes: dict[str, AttrDefn | IncludeTarget] | None = None
+    description: str | None = None
+    uid: int | None = None
+    category: str | None = None
+    extends: str | None = None
+    profiles: list[str] | None = None
+    associations: dict[str, list[str]] | None = None
+    constraints: dict[str, list[str]] | None = None
+    deprecated: DeprecationInfoDefn | None = None
+    include_: IncludeTarget | None = None
+    src_extension: str | None = None
+    key: str | None = None
 
-    def get_key(self) -> Optional[str]:
+    def get_key(self) -> str | None:
         """Return the key for the object definition with the extension prefix when appropriate."""
         if self.key is None:
             return self.name
@@ -144,27 +144,27 @@ class EventDefn(DefinitionData):
 class IncludeDefn(DefinitionData):
     """An include definition."""
 
-    caption: Optional[str] = None
-    description: Optional[str] = None
-    attributes: Optional[dict[str, AttrDefn | IncludeTarget]] = None
-    annotations: Optional[AttrDefn] = None
+    caption: str | None = None
+    description: str | None = None
+    attributes: dict[str, AttrDefn | IncludeTarget] | None = None
+    annotations: AttrDefn | None = None
 
 
 @dataclass
 class ProfileDefn(DefinitionData):
     """A profile definition."""
 
-    caption: Optional[str] = None
-    name: Optional[str] = None
-    meta: Optional[str] = None
-    description: Optional[str] = None
-    attributes: Optional[dict[str, AttrDefn | IncludeTarget]] = None
-    deprecated: Optional[DeprecationInfoDefn] = None
-    annotations: Optional[AttrDefn] = None
-    src_extension: Optional[str] = None
-    key: Optional[str] = None
+    caption: str | None = None
+    name: str | None = None
+    meta: str | None = None
+    description: str | None = None
+    attributes: dict[str, AttrDefn | IncludeTarget] | None = None
+    deprecated: DeprecationInfoDefn | None = None
+    annotations: AttrDefn | None = None
+    src_extension: str | None = None
+    key: str | None = None
 
-    def get_key(self) -> Optional[str]:
+    def get_key(self) -> str | None:
         """Return the key for the object definition with the extension prefix when appropriate."""
         if self.key is None:
             return self.name
@@ -176,33 +176,33 @@ class ProfileDefn(DefinitionData):
 class ExtensionDefn(DefinitionData):
     """An extension definition."""
 
-    name: Optional[str] = None
-    uid: Optional[int] = None
-    caption: Optional[str] = None
-    version: Optional[str] = None
-    description: Optional[str] = None
-    deprecated: Optional[DeprecationInfoDefn] = None
+    name: str | None = None
+    uid: int | None = None
+    caption: str | None = None
+    version: str | None = None
+    description: str | None = None
+    deprecated: DeprecationInfoDefn | None = None
 
 
 @dataclass
 class CategoryDefn(DefinitionPart):
     """A category definition."""
 
-    caption: Optional[str] = None
-    description: Optional[str] = None
-    uid: Optional[int] = None
-    type: Optional[str] = None
-    classes: Optional[dict[str, EventDefn]] = None
+    caption: str | None = None
+    description: str | None = None
+    uid: int | None = None
+    type: str | None = None
+    classes: dict[str, EventDefn] | None = None
 
 
 @dataclass
 class CategoriesDefn(DefinitionData):
     """A list of categories."""
 
-    attributes: Optional[dict[str, CategoryDefn | IncludeTarget]] = None
-    caption: Optional[str] = None
-    description: Optional[str] = None
-    name: Optional[str] = None
+    attributes: dict[str, CategoryDefn | IncludeTarget] | None = None
+    caption: str | None = None
+    description: str | None = None
+    name: str | None = None
 
 
 DefinitionT = TypeVar("DefinitionT", bound=DefinitionData, covariant=True)

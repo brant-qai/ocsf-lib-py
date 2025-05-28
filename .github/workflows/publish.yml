@@ -16,10 +16,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup python and poetry
-        uses: ./.github/actions/poetry
+      - name: Setup python and uv
+        uses: ./.github/actions/uv
 
       - name: Build and Publish
         run: |
-          poetry publish -p ${{ secrets.PYPI_TOKEN }} -u __token__ --build
+          uv build --wheel
+          uv publish -p ${{ secrets.PYPI_TOKEN }} -u __token__
         shell: bash

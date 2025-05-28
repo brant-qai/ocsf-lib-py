@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from pathlib import PurePath
-from typing import Optional
 
 from ocsf.repository import (
     AnyDefinition,
@@ -38,7 +37,7 @@ class IncludeOp(Operation):
         return merge(target.data, prereq.data, allowed_fields=allowed)
 
 
-def _find_dependency(repo: Repository, subject: str, relative_to: Optional[RepoPath] = None) -> RepoPath | None:
+def _find_dependency(repo: Repository, subject: str, relative_to: RepoPath | None = None) -> RepoPath | None:
     """Find the target of an $include directive relative to its source file.
 
     Arguments:

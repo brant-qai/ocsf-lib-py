@@ -1,6 +1,6 @@
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import Any, Optional, cast, get_type_hints
+from typing import Any, cast, get_type_hints
 
 from ocsf.repository.definitions import DefinitionPart
 
@@ -9,13 +9,13 @@ FieldList = list[str | tuple[str, ...]]
 
 @dataclass
 class MergeOptions:
-    overwrite: Optional[bool] = None
+    overwrite: bool | None = None
     """Always overwrite left with right"""
 
-    allowed_fields: Optional[FieldList] = None
+    allowed_fields: FieldList | None = None
     """Only update fields that are in this list or are nested under a field in this list"""
 
-    ignored_fields: Optional[FieldList] = None
+    ignored_fields: FieldList | None = None
     """Ignore fields that are in this list or are nested under a field in this list"""
 
     add_dict_items: bool = True
@@ -70,7 +70,7 @@ def _can_update(path: tuple[str, ...], left_value: Any, right_value: Any, option
 
     """
 
-    update: Optional[bool] = None
+    update: bool | None = None
 
     def change_field():
         # If overwrite is True, we'll always update the left value.
@@ -127,11 +127,11 @@ MergeResult = list[tuple[str, ...]]
 def merge(
     left: DefinitionPart,
     right: DefinitionPart,
-    overwrite: Optional[bool] = None,
+    overwrite: bool | None = None,
     *,
-    allowed_fields: Optional[FieldList] = None,
-    ignored_fields: Optional[FieldList] = None,
-    options: Optional[MergeOptions] = None,
+    allowed_fields: FieldList | None = None,
+    ignored_fields: FieldList | None = None,
+    options: MergeOptions | None = None,
     trail: tuple[str, ...] = tuple(),
 ) -> MergeResult:
     """Merge the right definition into the left definition."""

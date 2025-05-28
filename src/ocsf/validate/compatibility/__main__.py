@@ -59,12 +59,12 @@ Validate a working copy of the OCSF schema repository against the latest stable 
 
 """
 
+import tomllib
 from argparse import ArgumentParser
 from importlib.metadata import version
 from typing import cast
 from urllib.error import URLError
 
-import tomllib
 from termcolor import colored
 
 from ocsf.api import OcsfApiClient
@@ -220,11 +220,11 @@ def main():
     print()
     if not args.color:
         print(" OCSF Compatibility Validator ")
-        print(f'  ocsf-lib v{version("ocsf-lib")}')
+        print(f"  ocsf-lib v{version('ocsf-lib')}")
         print("=" * 30)
     else:
         print(colored(" OCSF Compatibility Validator", "white"))
-        print(colored(f'  ocsf-lib v{version("ocsf-lib")}', "cyan"))
+        print(colored(f"  ocsf-lib v{version('ocsf-lib')}", "cyan"))
         print(colored("=" * 30, "magenta"))
 
     print()

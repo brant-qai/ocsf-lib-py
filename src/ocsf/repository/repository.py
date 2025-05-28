@@ -12,7 +12,7 @@ that path – and, optionally, the raw data from the file as a `str`.
 from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import PurePath
-from typing import Generic, Optional, TypeVar, cast
+from typing import Generic, TypeVar, cast
 
 from .definitions import AnyDefinition, DefinitionData, ProfileDefn
 from .helpers import RepoPath, RepoPaths, path_defn_t
@@ -29,10 +29,10 @@ class DefinitionFile(Generic[DefnT]):
     the key in the repository's contents.
     """
 
-    raw_data: Optional[str] = None
+    raw_data: str | None = None
     """The raw data from the file, as a string. This can be useful for debugging but is not required."""
 
-    data: Optional[DefnT] = None
+    data: DefnT | None = None
     """The parsed data from the file as a DefinitionData dataclass. This should
     be an instance of the expected definition type for the path.
     """
@@ -45,7 +45,7 @@ class DefinitionFile(Generic[DefnT]):
 class Repository:
     """An OCSF schema repository."""
 
-    def __init__(self, contents: Optional[dict[RepoPath, DefinitionFile[AnyDefinition]]] = None):
+    def __init__(self, contents: dict[RepoPath, DefinitionFile[AnyDefinition]] | None = None):
         if contents is not None:
             self._contents = contents
         else:

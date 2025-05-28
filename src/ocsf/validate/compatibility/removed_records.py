@@ -9,7 +9,7 @@ caption or class_uid is added to the same set.
 """
 
 from dataclasses import dataclass
-from typing import Literal, Optional
+from typing import Literal
 
 from ocsf.compare import Addition, ChangedAttr, ChangedEvent, ChangedObject, Removal
 from ocsf.schema import OcsfElementType
@@ -21,7 +21,7 @@ from .context import CompatibilityContext
 def _path(
     root: Literal[OcsfElementType.OBJECT] | Literal[OcsfElementType.EVENT],
     name: str,
-    path: Optional[str | tuple[str, ...]],
+    path: str | tuple[str, ...] | None,
 ) -> str:
     """Format a path to a schema element."""
     path_str = root + ":"
@@ -41,7 +41,7 @@ class RemovedRecordFinding(Finding):
     name: str
     caption: str
     root: Literal[OcsfElementType.EVENT] | Literal[OcsfElementType.OBJECT] = OcsfElementType.EVENT
-    path: Optional[str | tuple[str, ...]] = None
+    path: str | tuple[str, ...] | None = None
 
     def _root(self) -> Literal[OcsfElementType.EVENT] | Literal[OcsfElementType.OBJECT]:
         return self.root
@@ -72,7 +72,7 @@ class RenamedRecordFinding(Finding):
     after: str
     caption: str
     root: Literal[OcsfElementType.EVENT] | Literal[OcsfElementType.OBJECT] = OcsfElementType.EVENT
-    path: Optional[str | tuple[str, ...]] = None
+    path: str | tuple[str, ...] | None = None
 
     def _root(self) -> Literal[OcsfElementType.EVENT] | Literal[OcsfElementType.OBJECT]:
         return self.root

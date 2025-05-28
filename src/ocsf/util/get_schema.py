@@ -1,5 +1,4 @@
 import os
-from typing import Optional
 
 from ocsf.api import OcsfApiClient
 from ocsf.compile import Compilation, CompilationOptions
@@ -8,8 +7,8 @@ from ocsf.schema import OcsfSchema, from_file
 
 
 def get_schema(
-    version_or_file: Optional[str] = None,
-    client: Optional[OcsfApiClient] = None,
+    version_or_file: str | None = None,
+    client: OcsfApiClient | None = None,
     compile_options: CompilationOptions | None = None,
 ) -> OcsfSchema:
     """Fetch a schema from a filename or version.

@@ -24,7 +24,7 @@ import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import StrEnum
-from typing import Generic, Optional, TypeVar
+from typing import Generic, TypeVar
 
 LOG = logging.getLogger(__name__)
 
@@ -95,7 +95,7 @@ class RuleMetadata:
     """Metadata for a rule."""
 
     name: str
-    description: Optional[str] = None
+    description: str | None = None
 
 
 class Rule(ABC, Generic[Context]):
@@ -134,7 +134,7 @@ ValidationFindings = dict[Rule[Context], list[Finding]]
 class Validator(ABC, Generic[Context]):
     """A simple validation harness."""
 
-    def __init__(self, context: Context, severities: Optional[dict[str, Severity]] = None):
+    def __init__(self, context: Context, severities: dict[str, Severity] | None = None):
         """Initialize the validator.
 
         Args:

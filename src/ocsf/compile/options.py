@@ -1,19 +1,18 @@
 from dataclasses import dataclass
-from typing import Optional
 
 
 @dataclass
 class CompilationOptions:
-    profiles: Optional[list[str]] = None
+    profiles: list[str] | None = None
     """A list of profiles to enable while compiling. Defaults to all profiles."""
 
-    extensions: Optional[list[str]] = None
+    extensions: list[str] | None = None
     """A list of extension directories to compile. Defaults to extensions/*."""
 
-    ignore_profiles: Optional[list[str]] = None
+    ignore_profiles: list[str] | None = None
     """A list of profiles to ignore while compiling. Defaults to None."""
 
-    ignore_extensions: Optional[list[str]] = None
+    ignore_extensions: list[str] | None = None
     """A list of extension directories to ignore while compiling. Defaults to None."""
 
     prefix_extensions: bool = True

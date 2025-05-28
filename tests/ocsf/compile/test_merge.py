@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional
 
 from ocsf.compile.merge import MergeOptions, merge
 from ocsf.repository import DefinitionPart
@@ -14,14 +13,14 @@ def test_options_init():
 
 @dataclass
 class LeftPart(DefinitionPart):
-    in_both: Optional[int] = None
-    in_left: Optional[int] = None
+    in_both: int | None = None
+    in_left: int | None = None
 
 
 @dataclass
 class RightPart(DefinitionPart):
-    in_both: Optional[int] = None
-    in_right: Optional[int] = None
+    in_both: int | None = None
+    in_right: int | None = None
 
 
 def test_basic_merge():
@@ -52,14 +51,14 @@ def test_overwrite_merge():
 
 @dataclass
 class SimplePart(DefinitionPart):
-    value: Optional[int] = None
+    value: int | None = None
 
 
 @dataclass
 class ComplexPart(DefinitionPart):
-    value: Optional[int] = None
-    other: Optional[SimplePart] = None
-    attrs: Optional[dict[str, SimplePart | str | list[str]]] = None
+    value: int | None = None
+    other: SimplePart | None = None
+    attrs: dict[str, SimplePart | str | list[str]] | None = None
 
 
 def complex_setup():

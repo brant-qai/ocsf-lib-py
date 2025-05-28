@@ -1,8 +1,8 @@
 """Read schema definition files from a directory into a Repository."""
 
 import json
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
 
 import dacite
 

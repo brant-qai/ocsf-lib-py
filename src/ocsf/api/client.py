@@ -19,7 +19,7 @@ import logging
 from copy import copy
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, ClassVar, Optional, cast
+from typing import Any, ClassVar, cast
 from urllib.parse import urljoin
 from urllib.request import urlopen
 
@@ -92,8 +92,8 @@ class OcsfApiClient:
 
     def __init__(
         self,
-        base_url: Optional[str] = None,
-        cache_dir: Optional[str | Path] = None,
+        base_url: str | None = None,
+        cache_dir: str | Path | None = None,
         schema_options: SchemaOptions | None = None,
         fetch_profiles: bool = True,
         fetch_extensions: bool = True,
@@ -109,7 +109,7 @@ class OcsfApiClient:
             fetch_extensions: If True, fetch available extensions when fetching a schema.
         """
         self._base_url = base_url or "https://schema.ocsf.io"
-        self._versions: Optional[SchemaVersions] = None
+        self._versions: SchemaVersions | None = None
         self._fetch_profiles = fetch_profiles
         self._fetch_extensions = fetch_extensions
         self._fetch_categories = fetch_categories
@@ -124,14 +124,14 @@ class OcsfApiClient:
         else:
             self._cache_dir = cache_dir
 
-    def _versioned_url(self, version: Optional[str] = None) -> str:
+    def _versioned_url(self, version: str | None = None) -> str:
         """Get the URL for a specific schema version."""
         if version is not None:
             return urljoin(self._base_url, f"{version}/")
         else:
             return self._base_url
 
-    def _fetch_schema(self, version: Optional[str] = None) -> OcsfSchema:
+    def _fetch_schema(self, version: str | None = None) -> OcsfSchema:
         """Fetch a schema from the server."""
         url = urljoin(self._versioned_url(version), "export/schema")
 
@@ -163,7 +163,7 @@ class OcsfApiClient:
             else:
                 raise ValueError(f"Invalid version string: {version}")
 
-    def get_profiles(self, version: Optional[str] = None) -> dict[str, OcsfProfile]:
+    def get_profiles(self, version: str | None = None) -> dict[str, OcsfProfile]:
         """Fetch the profiles for a specific schema version."""
         url = urljoin(self._versioned_url(version), "api/profiles")
         response = json.loads(urlopen(url).read())
@@ -176,7 +176,7 @@ class OcsfApiClient:
             resolve_object_types(cast(dict[str, WithAttributes], profiles))
         return profiles
 
-    def get_extensions(self, version: Optional[str] = None) -> dict[str, OcsfExtension]:
+    def get_extensions(self, version: str | None = None) -> dict[str, OcsfExtension]:
         """Fetch the extensions for a specific schema version."""
         url = urljoin(self._versioned_url(version), "api/extensions")
         response = json.loads(urlopen(url).read())
@@ -187,7 +187,7 @@ class OcsfApiClient:
 
         return extensions
 
-    def get_categories(self, version: Optional[str] = None) -> dict[str, OcsfCategory]:
+    def get_categories(self, version: str | None = None) -> dict[str, OcsfCategory]:
         """Fetch the extensions for a specific schema version."""
         url = urljoin(self._versioned_url(version), "api/categories")
         response = cast(dict[str, dict[str, Any]], json.loads(urlopen(url).read()))
@@ -217,7 +217,7 @@ class OcsfApiClient:
 
         return self._versions.default.version
 
-    def get_schema(self, version: Optional[str] = None) -> OcsfSchema:
+    def get_schema(self, version: str | None = None) -> OcsfSchema:
         """Get a schema from the cache or from the server.
 
         If version is None, the server's default version is used. The cache will
@@ -242,7 +242,7 @@ class OcsfApiClient:
             ValueError: If the version requested is not found on the server or
                 if the requested version is invalid.
         """
-        cached: Optional[OcsfSchema] = None
+        cached: OcsfSchema | None = None
 
         if version is not None:
             # Ensure version is a valid semantic version string.

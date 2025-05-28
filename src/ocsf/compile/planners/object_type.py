@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional
 
 from ocsf.repository import AnyDefinition, AttrDefn, DefinitionFile, DefnWithAttrs, EventDefn, ObjectDefn
 
@@ -41,7 +40,7 @@ class _Types:
 
 @dataclass(eq=True, frozen=True)
 class ObjectTypeOp(Operation):
-    types: Optional[_Types] = None
+    types: _Types | None = None
 
     def __str__(self):
         return f"Set object type in {self.target}"

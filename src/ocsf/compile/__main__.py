@@ -93,8 +93,7 @@ def main():
         default=True,
         action="store_true",
         help=(
-            "Prefix object and event names and any attributes that reference them as their type "
-            "with the extension name"
+            "Prefix object and event names and any attributes that reference them as their type with the extension name"
         ),
     )
     parser.add_argument(
@@ -144,7 +143,7 @@ def main():
         "--no-category-classes",
         dest="category_classes",
         action="store_false",
-        help=("Do not include classes in the category section of the schema output. " "This is the default behavior."),
+        help=("Do not include classes in the category section of the schema output. This is the default behavior."),
     )
 
     args = parser.parse_args()

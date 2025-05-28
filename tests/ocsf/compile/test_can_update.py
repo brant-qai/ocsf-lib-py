@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional
 
 from ocsf.compile.merge import MergeOptions, _can_update  # type: ignore
 from ocsf.repository import DefinitionPart
@@ -7,7 +6,7 @@ from ocsf.repository import DefinitionPart
 
 @dataclass
 class Defn(DefinitionPart):
-    prop: Optional[int] = None
+    prop: int | None = None
 
 
 def _perform_tests(options: MergeOptions) -> tuple[bool, bool, bool, bool]:

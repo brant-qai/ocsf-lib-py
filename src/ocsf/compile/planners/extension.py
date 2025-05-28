@@ -1,6 +1,5 @@
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import Optional
 
 from ocsf.repository import (
     AnyDefinition,
@@ -246,7 +245,7 @@ class _ExtensionTypeMap:
 class PrefixTypeOp(Operation):
     """This operation prefixes the type references of attributes with an extension name where appropriate."""
 
-    map: Optional[_ExtensionTypeMap] = None
+    map: _ExtensionTypeMap | None = None
 
     def __str__(self):
         return f"Prefix types with extensions in {self.target}"

@@ -1,0 +1,46 @@
+name: Setup python and uv
+
+runs:
+  using: "composite"
+  steps:
+    - name: Load asdf config
+      id: asdf
+      run: |
+        if [ -z ${{ inputs.UV_VERSION }} ]; then
+          echo uv-version=$(grep '^uv ' .tool-versions | awk '{print $2}') >> $GITHUB_OUTPUT;
+        else
+          echo uv-version=${{ inputs.UV_VERSION }} >> $GITHUB_OUTPUT;
+        fi
+
+        if [ -z ${{ inputs.PYTHON_VERSION }} ]; then
+          echo python-version=$(grep '^python ' .tool-versions | awk '{print $2}') >> $GITHUB_OUTPUT;
+        else
+          echo python-version=${{ inputs.PYTHON_VERSION }} >> $GITHUB_OUTPUT;
+        fi
+      shell: sh
+
+    - name: Install python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ steps.asdf.outputs.python-version }}
+
+    - name: Report python version
+      run: python --version
+      shell: sh
+
+    - name: Load cached venv
+      id: load-cached-venv
+      uses: actions/cache@v4
+      with:
+        path: .venv
+        key: venv-${{ runner.os }}-${{ steps.asdf.outputs.uv-version }}-${{ steps.asdf.outputs.python-version }}-${{ hashFiles('**/uv.lock') }}
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v6
+      with:
+        version: ${{ steps.asdf.outputs.uv-version || 'latest' }}
+
+    - name: Install dependencies
+      run: uv sync --all-extras --all-groups
+      if: steps.load-cached-venv.outputs.cache-hit != 'true'
+      shell: sh
